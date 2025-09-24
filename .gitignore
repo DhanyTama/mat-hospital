@@ -1,0 +1,36 @@
+# =========================
+# Python / FastAPI
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+env/
+*.sqlite3
+*.log
+
+# Database URLs / secrets
+.env.local
+.env.*.local
+
+# =========================
+# Node / Next.js (frontend)
+# =========================
+node_modules/
+.next/
+out/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / dist
+dist/
+build/
+
+# =========================
+# IDE / OS
+# =========================
+.vscode/
+.DS_Store
+*.swp
