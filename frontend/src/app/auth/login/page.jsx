@@ -74,10 +74,20 @@ export default function LoginPage() {
                 />
                 <button
                     type="submit"
-                    className="w-full bg-green-500 hover:bg-green-600 px-3 py-2 rounded"
+                    className="w-full bg-green-500 hover:bg-green-600 px-3 py-2 rounded cursor-pointer"
                 >
                     Login
                 </button>
+
+                <p className="text-center text-sm text-gray-400 pt-2">
+                    Belum punya akun?{" "}
+                    <a
+                        href="/auth/register"
+                        className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                    >
+                        Daftar di sini
+                    </a>
+                </p>
             </form>
         </div>
     );

@@ -17,7 +17,6 @@ export default function CreatePatientPage() {
         tanggal_kunjungan: "",
         diagnosis: "",
         tindakan: "",
-        dokter: "",
     });
 
     useEffect(() => {
@@ -87,12 +86,22 @@ export default function CreatePatientPage() {
                     />
                 ))}
 
-                <button
-                    type="submit"
-                    className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
-                >
-                    Simpan
-                </button>
+                <div className="flex space-x-4 pt-2">
+                    <button
+                        type="button"
+                        onClick={() => router.push("/patient")}
+                        className="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                    >
+                        Kembali
+                    </button>
+
+                    <button
+                        type="submit"
+                        className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                    >
+                        Simpan
+                    </button>
+                </div>
             </form>
         </div>
     );

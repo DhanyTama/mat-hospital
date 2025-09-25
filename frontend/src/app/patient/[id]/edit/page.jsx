@@ -108,18 +108,28 @@ export default function EditPatientPage() {
                                     type={key.includes("tanggal") ? "date" : "text"}
                                     value={form[key] || ""}
                                     onChange={handleChange}
-                                    className="border border-gray-600 rounded-lg px-3 py-2 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    className="border border-gray-600 rounded-lg px-3 py-2 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed"
                                     required
+                                    disabled={key === "dokter"}
                                 />
                             </div>
                         ))}
 
-                    <button
-                        type="submit"
-                        className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition-colors"
-                    >
-                        Simpan Perubahan
-                    </button>
+                    <div className="flex space-x-4 pt-2">
+                        <button
+                            type="button"
+                            onClick={() => router.push("/patient")}
+                            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                        >
+                            Kembali
+                        </button>
+                        <button
+                            type="submit"
+                            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition-colors cursor-pointer"
+                        >
+                            Simpan Perubahan
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

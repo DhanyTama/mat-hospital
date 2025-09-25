@@ -9,7 +9,7 @@ class PatientBase(BaseModel):
     tanggal_kunjungan: date
     diagnosis: str
     tindakan: str
-    dokter: str
+    dokter: Optional[str] = None
 
 
 class PatientCreate(PatientBase):
@@ -46,3 +46,10 @@ class PatientsResponse(BaseModel):
 
     class Config:
         orm_mode = True
+        
+class PatientImportItem(BaseModel):
+    nama: str
+    tanggal_kunjungan: date
+
+class PatientImportRequest(BaseModel):
+    patients: List[PatientImportItem]

@@ -63,10 +63,20 @@ export default function RegisterPage() {
 
                 <button
                     type="submit"
-                    className="w-full bg-green-500 hover:bg-green-600 px-3 py-2 rounded"
+                    className="w-full bg-green-500 hover:bg-green-600 px-3 py-2 rounded cursor-pointer"
                 >
                     Register
                 </button>
+
+                <p className="text-center text-sm text-gray-400 pt-2">
+                    Sudah punya akun?{" "}
+                    <a
+                        href="/auth/login"
+                        className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                    >
+                        Login di sini
+                    </a>
+                </p>
             </form>
         </div>
     );

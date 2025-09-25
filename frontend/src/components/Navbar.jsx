@@ -14,7 +14,7 @@ export default function Navbar() {
             <h1 className="text-lg font-bold">Patient App</h1>
             <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm"
+                className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm cursor-pointer"
             >
                 Logout
             </button>
