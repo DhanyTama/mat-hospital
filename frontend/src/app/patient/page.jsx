@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 export default function PatientPage() {
     const router = useRouter();
     const [patients, setPatients] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [totalToday, setTotalToday] = useState(0);
     const [deleteId, setDeleteId] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     const profile = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("profile") || "{}") : {};
-
 
     const fetchPatients = () => {
         fetch("http://localhost:8000/api/patient", {
@@ -27,7 +28,13 @@ export default function PatientPage() {
                 }
                 return res.json();
             })
-            .then((json) => setPatients(json.data ?? []));
+            .then((json) => {
+                if (json?.data) {
+                    setPatients(json.data.patients || []);
+                    setTotal(json.data.total || 0);
+                    setTotalToday(json.data.total_today || 0);
+                }
+            });
     };
 
     useEffect(() => {
@@ -60,9 +67,12 @@ export default function PatientPage() {
             <div className="w-full max-w-3xl bg-gray-800 p-8 rounded-2xl shadow-lg">
                 {profile.role === "dokter" && (
                     <>
-                        <h1 className="text-2xl font-bold mb-6 text-center text-green-400">
+                        <h1 className="text-2xl font-bold mb-2 text-center text-green-400">
                             Daftar Pasien
                         </h1>
+                        <div className="text-center text-gray-300 mb-4">
+                            Total Pasien: {total} | Hari Ini: {totalToday}
+                        </div>
 
                         <div className="flex justify-end mb-4">
                             <Link

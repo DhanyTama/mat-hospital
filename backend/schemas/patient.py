@@ -34,10 +34,15 @@ class PatientResponse(BaseModel):
     class Config:
         orm_mode = True
 
+class PatientsData(BaseModel):
+    total: int
+    total_today: int
+    patients: List[Patient]
+
 
 class PatientsResponse(BaseModel):
     message: str
-    data: List[Patient]
+    data: PatientsData
 
     class Config:
         orm_mode = True

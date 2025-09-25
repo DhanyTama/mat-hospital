@@ -1,5 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from datetime import date
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func
 from sqlalchemy.orm import Session
+from models.patient import Patient
 from db.database import SessionLocal
 from schemas.patient import (
     PatientCreate,
@@ -8,9 +11,9 @@ from schemas.patient import (
     PatientsResponse,
 )
 from services.patient_service import (
-    get_patients,
     get_patient,
     create_patient,
+    get_patients_filtered,
     update_patient,
     delete_patient,
 )
@@ -26,9 +29,26 @@ def get_db():
 
 
 @router.get("/", response_model=PatientsResponse)
-def read_patients(db: Session = Depends(get_db)):
-    patients = get_patients(db)
-    return {"message": "Daftar pasien berhasil diambil", "data": patients}
+def read_patients(
+    nama: str | None = Query(None, description="Filter by patient name"),
+    tanggal_kunjungan: str | None = Query(None, description="Filter by visit date (YYYY-MM-DD)"),
+    db: Session = Depends(get_db)
+):
+    patients = get_patients_filtered(db, nama, tanggal_kunjungan)
+
+    total = db.query(func.count()).select_from(Patient).scalar()
+    total_today = db.query(func.count()).select_from(Patient).filter(
+        func.date(Patient.tanggal_kunjungan) == date.today()
+    ).scalar()
+
+    return {
+        "message": "Daftar pasien berhasil diambil",
+        "data": {
+            "total": total,
+            "total_today": total_today,
+            "patients": patients
+        }
+    }
 
 
 @router.get("/{patient_id}", response_model=PatientResponse)
