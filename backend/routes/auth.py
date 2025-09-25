@@ -23,11 +23,21 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Username already registered")
 
     hashed_pw = get_password_hash(user.password)
-    new_user = User(username=user.username, password_hash=hashed_pw)
+    new_user = User(
+        username=user.username,
+        password_hash=hashed_pw,
+        role=user.role,   # simpan role dari input
+    )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return {"message": "User registered successfully", "username": new_user.username}
+    return {
+        "message": "User registered successfully",
+        "data": {
+            "username": new_user.username,
+            "role": new_user.role,
+        }
+    }
 
 @router.post("/login")
 def login(
