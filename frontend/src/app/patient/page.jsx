@@ -61,11 +61,7 @@ export default function PatientPage() {
         if (!localToken) {
             router.push("/auth/login");
         } else {
-            if (localProfile.role !== "dokter") {
-                alert("Akses ditolak. Hanya peran 'dokter' yang dapat mengakses halaman ini.");
-            } else {
-                fetchPatients(localToken, "", "");
-            }
+            fetchPatients(localToken, "", "");
         }
     }, []);
 
@@ -192,121 +188,117 @@ export default function PatientPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-4">
             <div className="w-full max-w-5xl bg-gray-800 p-8 rounded-2xl shadow-lg">
-                {clientProfile.role === "dokter" ? (
-                    <>
-                        <h1 className="text-2xl font-bold mb-2 text-center text-green-400">
-                            Daftar Pasien
-                        </h1>
-                        <div className="text-center text-gray-300 mb-4">
-                            Total Pasien: {total} | Hari Ini: {totalToday}
-                        </div>
+                <h1 className="text-2xl font-bold mb-2 text-center text-green-400">
+                    Daftar Pasien
+                </h1>
+                <div className="text-center text-gray-300 mb-4">
+                    Total Pasien: {total} | Hari Ini: {totalToday}
+                </div>
 
-                        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 mb-6 p-4 border border-gray-700 rounded-lg">
-                            <input
-                                type="text"
-                                placeholder="Cari berdasarkan Nama"
-                                value={filterName}
-                                onChange={(e) => setFilterName(e.target.value)}
-                                className="flex-1 p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <input
-                                type="date"
-                                value={filterDate}
-                                onChange={(e) => setFilterDate(e.target.value)}
-                                className="p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-green-500 focus:border-green-500"
-                            />
-                            <button
-                                type="submit"
-                                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
-                            >
-                                Cari
-                            </button>
-                        </form>
+                <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 mb-6 p-4 border border-gray-700 rounded-lg">
+                    <input
+                        type="text"
+                        placeholder="Cari berdasarkan Nama"
+                        value={filterName}
+                        onChange={(e) => setFilterName(e.target.value)}
+                        className="flex-1 p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-green-500 focus:border-green-500"
+                    />
+                    <input
+                        type="date"
+                        value={filterDate}
+                        onChange={(e) => setFilterDate(e.target.value)}
+                        className="p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-green-500 focus:border-green-500"
+                    />
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                    >
+                        Cari
+                    </button>
+                </form>
 
-                        <div className="flex justify-end mb-4 space-x-3">
-                            <button
-                                onClick={handleExport}
-                                className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
-                                disabled={patients.length === 0}
-                            >
-                                Export CSV
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setImportData('');
-                                    setImportMessage('');
-                                    setShowImportModal(true);
-                                }}
-                                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
-                            >
-                                Import Pasien
-                            </button>
+                <div className="flex justify-end mb-4 space-x-3">
+                    <button
+                        onClick={handleExport}
+                        className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                        disabled={patients.length === 0}
+                    >
+                        Export CSV
+                    </button>
+                    <button
+                        onClick={() => {
+                            setImportData('');
+                            setImportMessage('');
+                            setShowImportModal(true);
+                        }}
+                        className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                    >
+                        Import Pasien
+                    </button>
 
-                            <Link
-                                href="/patient/create"
-                                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
-                            >
-                                Tambah Pasien
-                            </Link>
-                        </div>
+                    <Link
+                        href="/patient/create"
+                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
+                    >
+                        Tambah Pasien
+                    </Link>
+                </div>
 
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full bg-gray-700 rounded-lg">
-                                <thead>
-                                    <tr className="bg-gray-600 text-left text-sm uppercase">
-                                        <th className="py-3 px-4">Nama</th>
-                                        <th className="py-3 px-4">Kunjungan</th>
-                                        <th className="py-3 px-4">Diagnosis</th>
-                                        <th className="py-3 px-4">Tindakan</th>
-                                        <th className="py-3 px-4">Dokter</th>
-                                        <th className="py-3 px-4 text-center">Aksi</th>
+                <div className="overflow-x-auto">
+                    <table className="min-w-full bg-gray-700 rounded-lg">
+                        <thead>
+                            <tr className="bg-gray-600 text-left text-sm uppercase">
+                                <th className="py-3 px-4">Nama</th>
+                                <th className="py-3 px-4">Kunjungan</th>
+                                <th className="py-3 px-4">Diagnosis</th>
+                                <th className="py-3 px-4">Tindakan</th>
+                                <th className="py-3 px-4">Dokter</th>
+                                <th className="py-3 px-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {patients.length > 0 ? (
+                                patients.map((p) => (
+                                    <tr key={p.id} className="border-b border-gray-600 hover:bg-gray-600 transition-colors">
+                                        <td className="py-3 px-4 align-middle">{p.nama}</td>
+                                        <td className="py-3 px-4 align-middle">{p.tanggal_kunjungan}</td>
+                                        <td className="py-3 px-4 align-middle">{p.diagnosis}</td>
+                                        <td className="py-3 px-4 align-middle">{p.tindakan}</td>
+                                        <td className="py-3 px-4 align-middle">{p.dokter}</td>
+
+                                        <td className="py-3 px-4">
+                                            <div className="flex justify-center items-center space-x-3 h-full">
+                                                <Link
+                                                    href={`/patient/${p.id}/edit`}
+                                                    className="text-yellow-400 hover:text-yellow-300 text-sm"
+                                                >
+                                                    Edit
+                                                </Link>
+                                                {clientProfile.role === "dokter" && (
+                                                    <button
+                                                        onClick={() => {
+                                                            setDeleteId(p.id);
+                                                            setShowModal(true);
+                                                        }}
+                                                        className="text-red-400 hover:text-red-300 text-sm cursor-pointer"
+                                                    >
+                                                        Hapus
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    {patients.length > 0 ? (
-                                        patients.map((p) => (
-                                            <tr key={p.id} className="border-b border-gray-600 hover:bg-gray-600 transition-colors">
-                                                <td className="py-3 px-4 align-middle">{p.nama}</td>
-                                                <td className="py-3 px-4 align-middle">{p.tanggal_kunjungan}</td>
-                                                <td className="py-3 px-4 align-middle">{p.diagnosis}</td>
-                                                <td className="py-3 px-4 align-middle">{p.tindakan}</td>
-                                                <td className="py-3 px-4 align-middle">{p.dokter}</td>
-
-                                                <td className="py-3 px-4">
-                                                    <div className="flex justify-center items-center space-x-3 h-full">
-                                                        <Link
-                                                            href={`/patient/${p.id}/edit`}
-                                                            className="text-yellow-400 hover:text-yellow-300 text-sm"
-                                                        >
-                                                            Edit
-                                                        </Link>
-                                                        <button
-                                                            onClick={() => {
-                                                                setDeleteId(p.id);
-                                                                setShowModal(true);
-                                                            }}
-                                                            className="text-red-400 hover:text-red-300 text-sm cursor-pointer"
-                                                        >
-                                                            Hapus
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="6" className="py-5 text-center text-gray-400">
-                                                Tidak ada data pasien ditemukan.
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </>
-                ) : (
-                    <p className="text-center text-red-500">Anda tidak memiliki izin akses ke halaman ini.</p>
-                )}
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6" className="py-5 text-center text-gray-400">
+                                        Tidak ada data pasien ditemukan.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {showModal && (
